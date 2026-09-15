@@ -236,3 +236,6 @@ __vm/
 
 # macOS / editor noise
 .DS_Store
+/extras/render-supplement.py
+/extras/README.md
+/extras/ACAN2518FD-Supplement.md
