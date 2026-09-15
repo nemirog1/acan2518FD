@@ -74,6 +74,7 @@ arithmetic expression.
 ### 4. The sleep/wake API
 
 Seven public methods and three private members. Nothing existing was modified.
+`extras/ACAN2518FD-Supplement.pdf` documents each of them properly.
 
 | Method | What it does |
 |---|---|
@@ -163,9 +164,19 @@ Identical to ACAN2517FD. Bit-rate configuration, the timing solver, reception
 filters, the `CANFDMessage` API, interrupt and polled operation, the `examples/`
 sketches — all Pierre's, all unchanged in behaviour.
 
-- **Full driver API documentation:** the PDF in `extras/` (written for
-  ACAN2517FD; the API is the same, with the type renamed).
-- **Upstream repository:** https://github.com/pierremolinaro/acan2517FD
+### Documentation
+
+Two documents in `extras/`, meant to be read together:
+
+| File | What it is |
+|---|---|
+| `acan2517FD.pdf` | **Pierre's driver manual**, 61 pages, reproduced unmodified. The reference for everything the driver does. Applies in full after the rename above. |
+| `ACAN2518FD-Supplement.pdf` | **What this fork adds**: the WAKIE finding, a reference for the seven new methods, the sleep and wake sequences, parking the transceiver, and which parts of Pierre's manual need a note beyond the rename. |
+
+`extras/README.md` explains the split; `ACAN2518FD-Supplement.md` is the
+supplement's source.
+
+**Upstream repository:** https://github.com/pierremolinaro/acan2517FD
 
 ### Quick start
 
