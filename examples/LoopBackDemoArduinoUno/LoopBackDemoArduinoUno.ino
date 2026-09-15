@@ -1,21 +1,21 @@
 //——————————————————————————————————————————————————————————————————————————————
-//  ACAN2517FD Demo in loopback mode, for Arduino Uno
+//  ACAN2518FD Demo in loopback mode, for Arduino Uno
 //——————————————————————————————————————————————————————————————————————————————
 
-#include <ACAN2517FD.h>
+#include <ACAN2518FD.h>
 #include <SPI.h>
 
 //——————————————————————————————————————————————————————————————————————————————
-// Very very important: put a 10kΩ resistor between CS and VDD of MCP2517FD
+// Very very important: put a 10kΩ resistor between CS and VDD of MCP2518FD
 
-static const byte MCP2517_CS  = 10 ; // CS input of MCP2517
-static const byte MCP2517_INT =  2 ; // INT output of MCP2517
+static const byte MCP2518_CS  = 10 ; // CS input of MCP2518
+static const byte MCP2518_INT =  2 ; // INT output of MCP2518
 
 //——————————————————————————————————————————————————————————————————————————————
-//  ACAN2517FD Driver object
+//  ACAN2518FD Driver object
 //——————————————————————————————————————————————————————————————————————————————
 
-ACAN2517FD can (MCP2517_CS, SPI, MCP2517_INT) ;
+ACAN2518FD can (MCP2518_CS, SPI, MCP2518_INT) ;
 
 //——————————————————————————————————————————————————————————————————————————————
 //   SETUP
@@ -30,21 +30,21 @@ void setup () {
   }
 //----------------------------------- Begin SPI
   SPI.begin () ;
-//--- Configure ACAN2517FD
-  Serial.print ("sizeof (ACAN2517FDSettings): ") ;
-  Serial.print (sizeof (ACAN2517FDSettings)) ;
+//--- Configure ACAN2518FD
+  Serial.print ("sizeof (ACAN2518FDSettings): ") ;
+  Serial.print (sizeof (ACAN2518FDSettings)) ;
   Serial.println (" bytes") ;
-  Serial.println ("Configure ACAN2517FD") ;
+  Serial.println ("Configure ACAN2518FD") ;
 //--- For version >= 2.1.0
-  ACAN2517FDSettings settings (ACAN2517FDSettings::OSC_4MHz10xPLL, 125UL * 1000UL, DataBitRateFactor::x1) ;
+  ACAN2518FDSettings settings (ACAN2518FDSettings::OSC_4MHz10xPLL, 125UL * 1000UL, DataBitRateFactor::x1) ;
 //--- For version < 2.1.0
-//  ACAN2517FDSettings settings (ACAN2517FDSettings::OSC_4MHz10xPLL, 125UL * 1000UL, ACAN2517FDSettings::DATA_BITRATE_x1) ;
-  settings.mRequestedMode = ACAN2517FDSettings::InternalLoopBack ; // Select loopback mode
+//  ACAN2518FDSettings settings (ACAN2518FDSettings::OSC_4MHz10xPLL, 125UL * 1000UL, ACAN2518FDSettings::DATA_BITRATE_x1) ;
+  settings.mRequestedMode = ACAN2518FDSettings::InternalLoopBack ; // Select loopback mode
 //--- Default values are too high for an Arduino Uno that contains 2048 bytes of RAM: reduce them
   settings.mDriverTransmitFIFOSize = 1 ;
   settings.mDriverReceiveFIFOSize = 1 ;
 //--- RAM Usage
-  Serial.print ("MCP2517FD RAM Usage: ") ;
+  Serial.print ("MCP2518FD RAM Usage: ") ;
   Serial.print (settings.ramUsage ()) ;
   Serial.println (" bytes") ;
 //--- Begin

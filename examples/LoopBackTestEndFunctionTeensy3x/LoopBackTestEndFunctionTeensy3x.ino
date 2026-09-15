@@ -1,36 +1,36 @@
 //——————————————————————————————————————————————————————————————————————————————
-//  ACAN2517FD Demo in loopback mode, using hardware SPI1, with an external interrupt
+//  ACAN2518FD Demo in loopback mode, using hardware SPI1, with an external interrupt
 //——————————————————————————————————————————————————————————————————————————————
 //  Every 1 000 messages, this sketch calls the end method, deallocates the driver,
 //  creates a new one, and configures it by calling the begin method.
 //——————————————————————————————————————————————————————————————————————————————
 
-#include <ACAN2517FD.h>
+#include <ACAN2518FD.h>
 
 //——————————————————————————————————————————————————————————————————————————————
-//  MCP2517 connections: adapt theses settings to your design
+//  MCP2518 connections: adapt theses settings to your design
 //  As hardware SPI is used, you should select pins that support SPI functions.
 //  This sketch is designed for a Teensy 3.5, using SPI1
 //  But standard Teensy 3.5 SPI1 pins are not used
-//    SCK input of MCP2517FD is connected to pin #32
-//    SDI input of MCP2517FD is connected to pin #0
-//    SDO output of MCP2517FD is connected to pin #1
-//  CS input of MCP2517FD should be connected to a digital output port
-//  INT output of MCP2517FD should be connected to a digital input port, with interrupt capability
+//    SCK input of MCP2518FD is connected to pin #32
+//    SDI input of MCP2518FD is connected to pin #0
+//    SDO output of MCP2518FD is connected to pin #1
+//  CS input of MCP2518FD should be connected to a digital output port
+//  INT output of MCP2518FD should be connected to a digital input port, with interrupt capability
 //——————————————————————————————————————————————————————————————————————————————
 
-static const byte MCP2517_SCK = 32 ; // SCK input of MCP2517
-static const byte MCP2517_SDI =  0 ; // SDI input of MCP2517
-static const byte MCP2517_SDO =  1 ; // SDO output of MCP2517
+static const byte MCP2518_SCK = 32 ; // SCK input of MCP2518
+static const byte MCP2518_SDI =  0 ; // SDI input of MCP2518
+static const byte MCP2518_SDO =  1 ; // SDO output of MCP2518
 
-static const byte MCP2517_CS  = 31 ; // CS input of MCP2517
-static const byte MCP2517_INT = 38 ; // INT output of MCP2517
+static const byte MCP2518_CS  = 31 ; // CS input of MCP2518
+static const byte MCP2518_INT = 38 ; // INT output of MCP2518
 
 //——————————————————————————————————————————————————————————————————————————————
-//  ACAN2517FD Driver object
+//  ACAN2518FD Driver object
 //——————————————————————————————————————————————————————————————————————————————
 
-ACAN2517FD * can = NULL ;
+ACAN2518FD * can = NULL ;
 
 //——————————————————————————————————————————————————————————————————————————————
 //   SETUP
@@ -49,34 +49,34 @@ void setup () {
   }
 //--- Define alternate pins for SPI1 (see https://www.pjrc.com/teensy/td_libs_SPI.html)
   Serial.print ("Using pin #") ;
-  Serial.print (MCP2517_SDI) ;
+  Serial.print (MCP2518_SDI) ;
   Serial.print (" for MOSI: ") ;
-  Serial.println (SPI1.pinIsMOSI (MCP2517_SDI) ? "yes" : "NO!!!") ;
+  Serial.println (SPI1.pinIsMOSI (MCP2518_SDI) ? "yes" : "NO!!!") ;
   Serial.print ("Using pin #") ;
-  Serial.print (MCP2517_SDO) ;
+  Serial.print (MCP2518_SDO) ;
   Serial.print (" for MISO: ") ;
-  Serial.println (SPI1.pinIsMISO (MCP2517_SDO) ? "yes" : "NO!!!") ;
+  Serial.println (SPI1.pinIsMISO (MCP2518_SDO) ? "yes" : "NO!!!") ;
   Serial.print ("Using pin #") ;
-  Serial.print (MCP2517_SCK) ;
+  Serial.print (MCP2518_SCK) ;
   Serial.print (" for SCK: ") ;
-  Serial.println (SPI1.pinIsSCK (MCP2517_SCK) ? "yes" : "NO!!!") ;
-  SPI1.setMOSI (MCP2517_SDI) ;
-  SPI1.setMISO (MCP2517_SDO) ;
-  SPI1.setSCK  (MCP2517_SCK) ;
+  Serial.println (SPI1.pinIsSCK (MCP2518_SCK) ? "yes" : "NO!!!") ;
+  SPI1.setMOSI (MCP2518_SDI) ;
+  SPI1.setMISO (MCP2518_SDO) ;
+  SPI1.setSCK  (MCP2518_SCK) ;
 //----------------------------------- Begin SPI1
   SPI1.begin () ;
-//--- Configure ACAN2517FD
-  Serial.println ("Configure ACAN2517FD") ;
+//--- Configure ACAN2518FD
+  Serial.println ("Configure ACAN2518FD") ;
 //--- Settings
-  ACAN2517FDSettings settings (ACAN2517FDSettings::OSC_4MHz10xPLL, 125 * 1000, DataBitRateFactor::x1) ;
+  ACAN2518FDSettings settings (ACAN2518FDSettings::OSC_4MHz10xPLL, 125 * 1000, DataBitRateFactor::x1) ;
 //--- Select loopback mode
-  settings.mRequestedMode = ACAN2517FDSettings::InternalLoopBack ;
+  settings.mRequestedMode = ACAN2518FDSettings::InternalLoopBack ;
 //--- RAM Usage
-  Serial.print ("MCP2517FD RAM Usage: ") ;
+  Serial.print ("MCP2518FD RAM Usage: ") ;
   Serial.print (settings.ramUsage ()) ;
   Serial.println (" bytes") ;
 //--- Begin
-  can = new ACAN2517FD (MCP2517_CS, SPI1, MCP2517_INT) ;
+  can = new ACAN2518FD (MCP2518_CS, SPI1, MCP2518_INT) ;
   const uint32_t errorCode = can->begin (settings, [] { can->isr () ; }) ;
   if (errorCode == 0) {
     Serial.print ("Bit Rate prescaler: ") ;
@@ -143,16 +143,16 @@ void loop () {
     //--- Stop CAN 
       const bool ok = can->end () ;
       delete can ; can = NULL ;
-      Serial.print ("Reset MCP2517FD, ") ;
+      Serial.print ("Reset MCP2518FD, ") ;
       Serial.println (ok ? "ok" : "error") ;
    //--- Settings
-      ACAN2517FDSettings settings (ACAN2517FDSettings::OSC_4MHz10xPLL, 125 * 1000, DataBitRateFactor::x1) ;
+      ACAN2518FDSettings settings (ACAN2518FDSettings::OSC_4MHz10xPLL, 125 * 1000, DataBitRateFactor::x1) ;
     //--- Select loopback mode
-      settings.mRequestedMode = ACAN2517FDSettings::InternalLoopBack ;
+      settings.mRequestedMode = ACAN2518FDSettings::InternalLoopBack ;
     //--- Begin
-     can = new ACAN2517FD (MCP2517_CS, SPI1, MCP2517_INT) ;
+     can = new ACAN2518FD (MCP2518_CS, SPI1, MCP2518_INT) ;
      const uint32_t errorCode = can->begin (settings, [] { can->isr () ; }) ;
-      Serial.print ("Reconfigure MCP2517FD, error ") ;
+      Serial.print ("Reconfigure MCP2518FD, error ") ;
       Serial.println (errorCode) ;
     }
     gCurrentFrame.ext = (random () & 1) == 0 ;

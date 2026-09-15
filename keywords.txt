@@ -6,11 +6,11 @@
 # Datatypes (KEYWORD1)
 #######################################
 
-ACAN2517FD	KEYWORD1
-ACAN2517FDSettings	KEYWORD1
+ACAN2518FD	KEYWORD1
+ACAN2518FDSettings	KEYWORD1
 CANMessage	KEYWORD1
 CANFDMessage	KEYWORD1
-ACAN2517FDFilters	KEYWORD1
+ACAN2518FDFilters	KEYWORD1
 
 #######################################
 # Methods and Functions (KEYWORD2)
@@ -27,6 +27,22 @@ appendFormatFilter	KEYWORD2
 appendFrameFilter	KEYWORD2
 appendFilter	KEYWORD2
 poll	KEYWORD2
+setOperationMode	KEYWORD2
+currentOperationMode	KEYWORD2
+setOperationModeAndWait	KEYWORD2
+maskInterruptsForSleep	KEYWORD2
+restoreInterruptsAfterSleep	KEYWORD2
+setWakeUpFilter	KEYWORD2
+isAsleep	KEYWORD2
+enterSleepMode	KEYWORD2
+wakeUpFromSleepMode	KEYWORD2
+performSleepModeToConfigurationMode	KEYWORD2
+gpioSetMode	KEYWORD2
+gpioWrite	KEYWORD2
+gpioRead	KEYWORD2
+configureGPIO0AsXSTBY	KEYWORD2
+errorCounters	KEYWORD2
+diagInfos	KEYWORD2
 
 #######################################
 # Constants (LITERAL1)

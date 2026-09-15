@@ -1,33 +1,33 @@
 //——————————————————————————————————————————————————————————————————————————————
-//  ACAN2517FD Filter Demo in loopback mode, using hardware SPI1, with an external interrupt
+//  ACAN2518FD Filter Demo in loopback mode, using hardware SPI1, with an external interrupt
 //——————————————————————————————————————————————————————————————————————————————
 
-#include <ACAN2517FD.h>
+#include <ACAN2518FD.h>
 
 //——————————————————————————————————————————————————————————————————————————————
-//  MCP2517 connections: adapt theses settings to your design
+//  MCP2518 connections: adapt theses settings to your design
 //  As hardware SPI is used, you should select pins that support SPI functions.
 //  This sketch is designed for a Teensy 3.5, using SPI1
 //  But standard Teensy 3.5 SPI1 pins are not used
-//    SCK input of MCP2517 is connected to pin #32
-//    SDI input of MCP2517 is connected to pin #0
-//    SDO output of MCP2517 is connected to pin #1
-//  CS input of MCP2517 should be connected to a digital output port
-//  INT output of MCP2517 should be connected to a digital input port, with interrupt capability
+//    SCK input of MCP2518 is connected to pin #32
+//    SDI input of MCP2518 is connected to pin #0
+//    SDO output of MCP2518 is connected to pin #1
+//  CS input of MCP2518 should be connected to a digital output port
+//  INT output of MCP2518 should be connected to a digital input port, with interrupt capability
 //——————————————————————————————————————————————————————————————————————————————
 
-static const byte MCP2517_SCK = 32 ; // SCK input of MCP2517
-static const byte MCP2517_SDI =  0 ; // SDI input of MCP2517
-static const byte MCP2517_SDO =  1 ; // SDO output of MCP2517
+static const byte MCP2518_SCK = 32 ; // SCK input of MCP2518
+static const byte MCP2518_SDI =  0 ; // SDI input of MCP2518
+static const byte MCP2518_SDO =  1 ; // SDO output of MCP2518
 
-static const byte MCP2517_CS  = 31 ; // CS input of MCP2517
-static const byte MCP2517_INT = 38 ; // INT output of MCP2517
+static const byte MCP2518_CS  = 31 ; // CS input of MCP2518
+static const byte MCP2518_INT = 38 ; // INT output of MCP2518
 
 //——————————————————————————————————————————————————————————————————————————————
-//  ACAN2517FD Driver object
+//  ACAN2518FD Driver object
 //——————————————————————————————————————————————————————————————————————————————
 
-ACAN2517FD can (MCP2517_CS, SPI1, MCP2517_INT) ;
+ACAN2518FD can (MCP2518_CS, SPI1, MCP2518_INT) ;
 
 //——————————————————————————————————————————————————————————————————————————————
 //   RECEIVE FUNCTION
@@ -64,25 +64,25 @@ void setup () {
     digitalWrite (LED_BUILTIN, !digitalRead (LED_BUILTIN)) ;
   }
 //----------------------------------- Define alternate pins for SPI1 (see https://www.pjrc.com/teensy/td_libs_SPI.html)
-  SPI1.setMOSI (MCP2517_SDI) ;
-  SPI1.setMISO (MCP2517_SDO) ;
-  SPI1.setSCK (MCP2517_SCK) ;
+  SPI1.setMOSI (MCP2518_SDI) ;
+  SPI1.setMISO (MCP2518_SDO) ;
+  SPI1.setSCK (MCP2518_SCK) ;
 //----------------------------------- Begin SPI1
   SPI1.begin () ;
-//----------------------------------- Configure ACAN2517FD
-  Serial.println ("Configure ACAN2517FD") ;
+//----------------------------------- Configure ACAN2518FD
+  Serial.println ("Configure ACAN2518FD") ;
 //--- For version >= 2.1.0
-  ACAN2517FDSettings settings (ACAN2517FDSettings::OSC_4MHz10xPLL, 125 * 1000, DataBitRateFactor::x1) ;
+  ACAN2518FDSettings settings (ACAN2518FDSettings::OSC_4MHz10xPLL, 125 * 1000, DataBitRateFactor::x1) ;
 //--- For version < 2.1.0
-//  ACAN2517FDSettings settings (ACAN2517FDSettings::OSC_4MHz10xPLL, 125 * 1000, ACAN2517FDSettings::DATA_BITRATE_x1) ;
-  settings.mRequestedMode = ACAN2517FDSettings::InternalLoopBack ; // Select loopback mode
+//  ACAN2518FDSettings settings (ACAN2518FDSettings::OSC_4MHz10xPLL, 125 * 1000, ACAN2518FDSettings::DATA_BITRATE_x1) ;
+  settings.mRequestedMode = ACAN2518FDSettings::InternalLoopBack ; // Select loopback mode
 //----------------------------------- Append filters
-  ACAN2517FDFilters filters ;
+  ACAN2518FDFilters filters ;
   filters.appendFrameFilter (kStandard, 0x123, receiveFromFilter0) ; // Filter #0: receive standard frame with identifier 0x123
   filters.appendFrameFilter (kExtended, 0x12345678, receiveFromFilter1) ; // Filter #1: receive extended frame with identifier 0x12345678
   filters.appendFilter (kStandard, 0x70F, 0x304, receiveFromFilter2) ; // Filter #2: receive standard frame with identifier 0x3n4
 //----------------------------------- Filters ok ?
-  if (filters.filterStatus () != ACAN2517FDFilters::kFiltersOk) {
+  if (filters.filterStatus () != ACAN2518FDFilters::kFiltersOk) {
     Serial.print ("Error filter ") ;
     Serial.print (filters.filterErrorIndex ()) ;
     Serial.print (": ") ;

@@ -227,3 +227,12 @@ TSWLatexianTemp*
 
 # expex forward references with \gathertags
 *-tags.tex
+
+# Visual Studio / Visual Micro local state (added in this fork)
+.vs/
+*.suo
+*.user
+__vm/
+
+# macOS / editor noise
+.DS_Store

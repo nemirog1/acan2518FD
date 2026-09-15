@@ -1,23 +1,24 @@
 //------------------------------------------------------------------------------
 // An utility class for:
-//   - ACAN2517FD CAN driver for MCP2517FD (CANFD mode)
+//   - ACAN2518FD CAN driver for MCP2518FD (CANFD mode)
 // by Pierre Molinaro
 // https://github.com/pierremolinaro/acan2517FD
 //
+// Forked for the MCP2518FD from ACAN2517FD 2.1.16 (MIT, Pierre Molinaro) - see README.md
 //------------------------------------------------------------------------------
 
-#ifndef ACAN2517FD_FILTERS_CLASS_DEFINED
-#define ACAN2517FD_FILTERS_CLASS_DEFINED
+#ifndef ACAN2518FD_FILTERS_CLASS_DEFINED
+#define ACAN2518FD_FILTERS_CLASS_DEFINED
 
 //------------------------------------------------------------------------------
 
-#include <ACAN2517FD_CANFDMessage.h>
+#include <ACAN2518FD_CANFDMessage.h>
 
 //------------------------------------------------------------------------------
-//  ACAN2517FDFilters class
+//  ACAN2518FDFilters class
 //------------------------------------------------------------------------------
 
-class ACAN2517FDFilters {
+class ACAN2518FDFilters {
 
 //------------------------------------------------------------------------------
 //   EMBEDDED CLASS
@@ -62,13 +63,13 @@ class ACAN2517FDFilters {
 //   CONSTRUCTOR
 //------------------------------------------------------------------------------
 
-  public: ACAN2517FDFilters (void) {}
+  public: ACAN2518FDFilters (void) {}
 
 //------------------------------------------------------------------------------
 //   DESTRUCTOR
 //------------------------------------------------------------------------------
 
-  public: ~ ACAN2517FDFilters (void) {
+  public: ~ ACAN2518FDFilters (void) {
     while (mFirstFilter != NULL) {
       Filter * next = mFirstFilter->mNextFilter ;
       delete mFirstFilter ;
@@ -220,14 +221,14 @@ class ACAN2517FDFilters {
 //   NO COPY
 //------------------------------------------------------------------------------
 
-  private: ACAN2517FDFilters (const ACAN2517FDFilters &) = delete ;
-  private: ACAN2517FDFilters & operator = (const ACAN2517FDFilters &) = delete ;
+  private: ACAN2518FDFilters (const ACAN2518FDFilters &) = delete ;
+  private: ACAN2518FDFilters & operator = (const ACAN2518FDFilters &) = delete ;
 
 //------------------------------------------------------------------------------
 //   Friend
 //------------------------------------------------------------------------------
 
-  friend class ACAN2517FD ;
+  friend class ACAN2518FD ;
 
 //------------------------------------------------------------------------------
 

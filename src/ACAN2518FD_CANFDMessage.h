@@ -4,6 +4,7 @@
 //
 // https://github.com/pierremolinaro/acan2517FD
 //
+// Forked for the MCP2518FD from ACAN2517FD 2.1.16 (MIT, Pierre Molinaro) - see README.md
 //------------------------------------------------------------------------------
 
 #ifndef GENERIC_CANFD_MESSAGE_DEFINED
@@ -11,7 +12,7 @@
 
 //------------------------------------------------------------------------------
 
-#include <ACAN2517FD_CANMessage.h>
+#include <ACAN2518FD_CANMessage.h>
 
 //------------------------------------------------------------------------------
 //    CANFDMessage class

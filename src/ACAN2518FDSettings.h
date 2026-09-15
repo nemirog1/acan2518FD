@@ -1,21 +1,22 @@
 //------------------------------------------------------------------------------
-// A CAN driver for MCP2517FD (CANFD mode)
+// A CAN driver for MCP2518FD (CANFD mode)
 // by Pierre Molinaro
 // https://github.com/pierremolinaro/acan2517FD
 //
+// Forked for the MCP2518FD from ACAN2517FD 2.1.16 (MIT, Pierre Molinaro) - see README.md
 //------------------------------------------------------------------------------
 
 #pragma once
 
 //------------------------------------------------------------------------------
 
-#include <ACAN2517FD_DataBitRateFactor.h>
+#include <ACAN2518FD_DataBitRateFactor.h>
 
 //------------------------------------------------------------------------------
-//  ACAN2517FDSettings class
+//  ACAN2518FDSettings class
 //------------------------------------------------------------------------------
 
-class ACAN2517FDSettings {
+class ACAN2518FDSettings {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   //   ENUMERATED TYPES
@@ -85,7 +86,7 @@ class ACAN2517FDSettings {
   //   CONSTRUCTOR
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  public: ACAN2517FDSettings (const Oscillator inOscillator,
+  public: ACAN2518FDSettings (const Oscillator inOscillator,
                               const uint32_t inDesiredArbitrationBitRate,
                               const DataBitRateFactor inDataBitRateFactor,
                               const uint32_t inTolerancePPM = 1000) ;
@@ -94,11 +95,11 @@ class ACAN2517FDSettings {
   //   DEPRECATED CONSTRUCTOR (for compatibility with version < 2.1.0)
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  public: ACAN2517FDSettings (const Oscillator inOscillator,
+  public: ACAN2518FDSettings (const Oscillator inOscillator,
                               const uint32_t inDesiredArbitrationBitRate,
                               const DataBitRateFactor_Deprecated inDataBitRateFactor,
                               const uint32_t inTolerancePPM = 1000) :
-  ACAN2517FDSettings (inOscillator, inDesiredArbitrationBitRate, DataBitRateFactor (inDataBitRateFactor), inTolerancePPM) {
+  ACAN2518FDSettings (inOscillator, inDesiredArbitrationBitRate, DataBitRateFactor (inDataBitRateFactor), inTolerancePPM) {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -109,7 +110,7 @@ class ACAN2517FDSettings {
   private: uint32_t mSysClock ; // In Hz
   public: const uint32_t mDesiredArbitrationBitRate ; // In kb/s
   public: const DataBitRateFactor mDataBitRateFactor ;
-//--- Data bit rate; if mDataBitRateFactor==1, theses properties are not used for configuring the MCP2517FD.
+//--- Data bit rate; if mDataBitRateFactor==1, theses properties are not used for configuring the MCP2518FD.
   public: uint8_t mDataPhaseSegment1 = 0 ; // if mDataBitRateFactor > 1: 2...32, else equal to mArbitrationPhaseSegment1
   public: uint8_t mDataPhaseSegment2 = 0 ; // if mDataBitRateFactor > 1: 1...16, else equal to mArbitrationPhaseSegment2
   public: uint8_t mDataSJW = 0 ; // if mDataBitRateFactor > 1: 1...16, else equal to mArbitrationSJW
@@ -124,13 +125,13 @@ class ACAN2517FDSettings {
   public: int8_t mTDCO = 0 ; // -64 ... +63
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  //    MCP2517FD TXCAN pin is Open Drain ?
+  //    MCP2518FD TXCAN pin is Open Drain ?
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   public: bool mTXCANIsOpenDrain = false ; // false --> Push/Pull Output, true --> Open Drain Output
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  //    MCP2517FD INT pin is Open Drain ?
+  //    MCP2518FD INT pin is Open Drain ?
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   public: bool mINTIsOpenDrain = false ; // false --> Push/Pull Output, true --> Open Drain Output
@@ -144,7 +145,7 @@ class ACAN2517FDSettings {
   public: bool mISOCRCEnabled = true ;
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  //    CLKO pin function (default value is MCP2517FD power on setting)
+  //    CLKO pin function (default value is MCP2518FD power on setting)
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   public: CLKOpin mCLKOPin = CLKO_DIVIDED_BY_10 ;

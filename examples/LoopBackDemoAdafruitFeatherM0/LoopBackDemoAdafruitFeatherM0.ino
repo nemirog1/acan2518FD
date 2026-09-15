@@ -1,5 +1,5 @@
 //——————————————————————————————————————————————————————————————————————————————
-//  ACAN2517FD Demo in loopback mode, for Adafruit M0
+//  ACAN2518FD Demo in loopback mode, for Adafruit M0
 //——————————————————————————————————————————————————————————————————————————————
 
 #ifndef ARDUINO_SAMD_ZERO
@@ -8,26 +8,26 @@
 
 //——————————————————————————————————————————————————————————————————————————————
 
-#include <ACAN2517FD.h>
+#include <ACAN2518FD.h>
 #include <SPI.h>
 #include <wiring_private.h>
 
 //——————————————————————————————————————————————————————————————————————————————
-// Very very important: put a 10kΩ resistor between CS and VDD of MCP2517FD
+// Very very important: put a 10kΩ resistor between CS and VDD of MCP2518FD
 
-static const byte MCP2517_CS  =  6 ; // CS input of MCP2517
-static const byte MCP2517_INT =  5 ; // INT output of MCP2517
-static const byte MCP2517_SO  = 10 ; // SO output of MCP2517
-static const byte MCP2517_SI  = 11 ; // SI input of MCP2517
-static const byte MCP2517_CLK = 12 ; // CLK input of MCP2517
+static const byte MCP2518_CS  =  6 ; // CS input of MCP2518
+static const byte MCP2518_INT =  5 ; // INT output of MCP2518
+static const byte MCP2518_SO  = 10 ; // SO output of MCP2518
+static const byte MCP2518_SI  = 11 ; // SI input of MCP2518
+static const byte MCP2518_CLK = 12 ; // CLK input of MCP2518
 
 //——————————————————————————————————————————————————————————————————————————————
-//  ACAN2517FD Driver object
+//  ACAN2518FD Driver object
 //——————————————————————————————————————————————————————————————————————————————
 
-SPIClass mySPI (&sercom1, MCP2517_SO, MCP2517_CLK, MCP2517_SI, SPI_PAD_0_SCK_3, SERCOM_RX_PAD_2);
+SPIClass mySPI (&sercom1, MCP2518_SO, MCP2518_CLK, MCP2518_SI, SPI_PAD_0_SCK_3, SERCOM_RX_PAD_2);
 
-ACAN2517FD can (MCP2517_CS, mySPI, MCP2517_INT) ;
+ACAN2518FD can (MCP2518_CS, mySPI, MCP2518_INT) ;
 
 //——————————————————————————————————————————————————————————————————————————————
 //   SETUP
@@ -42,22 +42,22 @@ void setup () {
   }
 //----------------------------------- Begin SPI
   mySPI.begin () ;
-  pinPeripheral (MCP2517_SI, PIO_SERCOM);
-  pinPeripheral (MCP2517_CLK, PIO_SERCOM);
-  pinPeripheral (MCP2517_SO, PIO_SERCOM);
-//--- Configure ACAN2517FD
-  Serial.print ("sizeof (ACAN2517FDSettings): ") ;
-  Serial.print (sizeof (ACAN2517FDSettings)) ;
+  pinPeripheral (MCP2518_SI, PIO_SERCOM);
+  pinPeripheral (MCP2518_CLK, PIO_SERCOM);
+  pinPeripheral (MCP2518_SO, PIO_SERCOM);
+//--- Configure ACAN2518FD
+  Serial.print ("sizeof (ACAN2518FDSettings): ") ;
+  Serial.print (sizeof (ACAN2518FDSettings)) ;
   Serial.println (" bytes") ;
-  Serial.println ("Configure ACAN2517FD") ;
+  Serial.println ("Configure ACAN2518FD") ;
 //--- For version >= 2.1.0
-  ACAN2517FDSettings settings (ACAN2517FDSettings::OSC_20MHz, 500UL * 1000UL, DataBitRateFactor::x1) ;
-  settings.mRequestedMode = ACAN2517FDSettings::InternalLoopBack ; // Select loopback mode
+  ACAN2518FDSettings settings (ACAN2518FDSettings::OSC_20MHz, 500UL * 1000UL, DataBitRateFactor::x1) ;
+  settings.mRequestedMode = ACAN2518FDSettings::InternalLoopBack ; // Select loopback mode
 //--- Default values are too high for an Arduino Uno that contains 2048 bytes of RAM: reduce them
   settings.mDriverTransmitFIFOSize = 1 ;
   settings.mDriverReceiveFIFOSize = 1 ;
 //--- RAM Usage
-  Serial.print ("MCP2517FD RAM Usage: ") ;
+  Serial.print ("MCP2518FD RAM Usage: ") ;
   Serial.print (settings.ramUsage ()) ;
   Serial.println (" bytes") ;
 //--- Begin

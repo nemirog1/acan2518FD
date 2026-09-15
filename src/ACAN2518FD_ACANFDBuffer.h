@@ -1,8 +1,9 @@
 //------------------------------------------------------------------------------
-// A CAN driver for MCP2517FD CAN Controller in CANFD mode
+// A CAN driver for MCP2518FD CAN Controller in CANFD mode
 // by Pierre Molinaro
 // https://github.com/pierremolinaro/acan2517FD
 //
+// Forked for the MCP2518FD from ACAN2517FD 2.1.16 (MIT, Pierre Molinaro) - see README.md
 //------------------------------------------------------------------------------
 
 #ifndef ACANFD_BUFFER_CLASS_DEFINED
@@ -10,7 +11,7 @@
 
 //------------------------------------------------------------------------------
 
-#include <ACAN2517FD_CANFDMessage.h>
+#include <ACAN2518FD_CANFDMessage.h>
 
 //------------------------------------------------------------------------------
 

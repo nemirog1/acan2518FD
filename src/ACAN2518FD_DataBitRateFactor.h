@@ -4,8 +4,9 @@
 
 // This header is common to libraries
 //        https://github.com/pierremolinaro/ACAN_T4
-//        https://github.com/pierremolinaro/ACAN2517FD
+//        https://github.com/pierremolinaro/ACAN2518FD
 //
+// Forked for the MCP2518FD from ACAN2517FD 2.1.16 (MIT, Pierre Molinaro) - see README.md
 //------------------------------------------------------------------------------
 
 #ifndef ACANFD_DATA_BIT_RATE_FACTOR_DEFINED

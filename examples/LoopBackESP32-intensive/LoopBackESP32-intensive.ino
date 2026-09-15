@@ -1,5 +1,5 @@
 //——————————————————————————————————————————————————————————————————————————————
-//  ACAN2517FD Demo in loopback mode, intensive test, for ESP32
+//  ACAN2518FD Demo in loopback mode, intensive test, for ESP32
 //——————————————————————————————————————————————————————————————————————————————
 
 #ifndef ARDUINO_ARCH_ESP32
@@ -8,7 +8,7 @@
 
 //——————————————————————————————————————————————————————————————————————————————
 
-#include <ACAN2517FD.h>
+#include <ACAN2518FD.h>
 #include <SPI.h>
 
 //——————————————————————————————————————————————————————————————————————————————
@@ -17,9 +17,9 @@
 //  By default, Arduino SPI uses VSPI, leaving HSPI unused.
 //  Default VSPI pins are: SCK=18, MISO=19, MOSI=23.
 //  You can change the default pin with additional begin arguments
-//    SPI.begin (MCP2517_SCK, MCP2517_MISO, MCP2517_MOSI)
-//  CS input of MCP2517 should be connected to a digital output port
-//  INT output of MCP2517 should be connected to a digital input port, with interrupt capability
+//    SPI.begin (MCP2518_SCK, MCP2518_MISO, MCP2518_MOSI)
+//  CS input of MCP2518 should be connected to a digital output port
+//  INT output of MCP2518 should be connected to a digital input port, with interrupt capability
 //  Notes:
 //    - GPIOs 34 to 39 are GPIs – input only pins. These pins don’t have internal pull-ups or
 //      pull-down resistors. They can’t be used as outputs.
@@ -28,19 +28,19 @@
 // See https://randomnerdtutorials.com/esp32-pinout-reference-gpios/
 //——————————————————————————————————————————————————————————————————————————————
 
-static const byte MCP2517_SCK  = 26 ; // SCK input of MCP2517FD
-static const byte MCP2517_MOSI = 19 ; // SDI input of MCP2517FD
-static const byte MCP2517_MISO = 18 ; // SDO output of MCP2517FD
+static const byte MCP2518_SCK  = 26 ; // SCK input of MCP2518FD
+static const byte MCP2518_MOSI = 19 ; // SDI input of MCP2518FD
+static const byte MCP2518_MISO = 18 ; // SDO output of MCP2518FD
 
-static const byte MCP2517_CS  = 16 ; // CS input of MCP2517FD
-static const byte MCP2517_INT = 32 ; // INT output of MCP2517FD
+static const byte MCP2518_CS  = 16 ; // CS input of MCP2518FD
+static const byte MCP2518_INT = 32 ; // INT output of MCP2518FD
 
 //——————————————————————————————————————————————————————————————————————————————
-//  ACAN2517FD Driver object
+//  ACAN2518FD Driver object
 //——————————————————————————————————————————————————————————————————————————————
 
 SPIClass vspi (VSPI) ; // See ESP32 demo sketch: SPI_Multiple_Busses
-ACAN2517FD can (MCP2517_CS, vspi, MCP2517_INT) ;
+ACAN2518FD can (MCP2518_CS, vspi, MCP2518_INT) ;
 
 //——————————————————————————————————————————————————————————————————————————————
 //   SETUP
@@ -58,17 +58,17 @@ void setup () {
     digitalWrite (LED_BUILTIN, !digitalRead (LED_BUILTIN)) ;
   }
 //----------------------------------- Begin SPI
-  vspi.begin (MCP2517_SCK, MCP2517_MISO, MCP2517_MOSI) ;
-//--- Configure ACAN2517FD
-  Serial.print ("sizeof (ACAN2517FDSettings): ") ;
-  Serial.print (sizeof (ACAN2517FDSettings)) ;
+  vspi.begin (MCP2518_SCK, MCP2518_MISO, MCP2518_MOSI) ;
+//--- Configure ACAN2518FD
+  Serial.print ("sizeof (ACAN2518FDSettings): ") ;
+  Serial.print (sizeof (ACAN2518FDSettings)) ;
   Serial.println (" bytes") ;
-  Serial.println ("Configure ACAN2517FD") ;
+  Serial.println ("Configure ACAN2518FD") ;
 //--- For version >= 2.1.0
-  ACAN2517FDSettings settings (ACAN2517FDSettings::OSC_4MHz10xPLL, 1000 * 1000, DataBitRateFactor::x8) ;
+  ACAN2518FDSettings settings (ACAN2518FDSettings::OSC_4MHz10xPLL, 1000 * 1000, DataBitRateFactor::x8) ;
 //--- For version < 2.1.0
-//  ACAN2517FDSettings settings (ACAN2517FDSettings::OSC_4MHz10xPLL, 1000 * 1000, ACAN2517FDSettings::DATA_BITRATE_x8) ;
-  settings.mRequestedMode = ACAN2517FDSettings::InternalLoopBack ; // Select loopback mode
+//  ACAN2518FDSettings settings (ACAN2518FDSettings::OSC_4MHz10xPLL, 1000 * 1000, ACAN2518FDSettings::DATA_BITRATE_x8) ;
+  settings.mRequestedMode = ACAN2518FDSettings::InternalLoopBack ; // Select loopback mode
   const uint32_t errorCode = can.begin (settings, [] { can.isr () ; }) ;
   if (errorCode == 0) {
     Serial.print ("Bit Rate prescaler: ") ;

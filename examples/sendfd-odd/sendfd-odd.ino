@@ -1,32 +1,32 @@
 //——————————————————————————————————————————————————————————————————————————————
-//  ACAN2517FD or ACAN2518FD Demo, using SPI1
+//  ACAN2518FD or ACAN2518FD Demo, using SPI1
 //——————————————————————————————————————————————————————————————————————————————
 
-#include <ACAN2517FD.h>
+#include <ACAN2518FD.h>
 
 //——————————————————————————————————————————————————————————————————————————————
-//  MCP2517FD connections: adapt theses settings to your design
+//  MCP2518FD connections: adapt theses settings to your design
 //  As hardware SPI is used, you should select pins that support SPI functions.
 //  This sketch is designed for a Teensy 3.5, using SPI1
 //  But standard Teensy 3.5 SPI1 pins are not used
-//    SCK input of MCP2517 is connected to pin #32
-//    SDI input of MCP2517 is connected to pin #0
-//    SDO output of MCP2517 is connected to pin #1
-//  CS input of MCP2517 should be connected to a digital output port
+//    SCK input of MCP2518 is connected to pin #32
+//    SDI input of MCP2518 is connected to pin #0
+//    SDO output of MCP2518 is connected to pin #1
+//  CS input of MCP2518 should be connected to a digital output port
 //——————————————————————————————————————————————————————————————————————————————
 
-static const byte MCP2517_SCK = 32 ; // SCK input of MCP2517
-static const byte MCP2517_SDI =  0 ; // SDI input of MCP2517
-static const byte MCP2517_SDO =  1 ; // SDO output of MCP2517
+static const byte MCP2518_SCK = 32 ; // SCK input of MCP2518
+static const byte MCP2518_SDI =  0 ; // SDI input of MCP2518
+static const byte MCP2518_SDO =  1 ; // SDO output of MCP2518
 
-static const byte MCP2517_CS  = 31 ; // CS input of MCP2517
-static const byte MCP2517_INT = 38 ; // INT output of MCP2517
+static const byte MCP2518_CS  = 31 ; // CS input of MCP2518
+static const byte MCP2518_INT = 38 ; // INT output of MCP2518
 
 //——————————————————————————————————————————————————————————————————————————————
-//  ACAN2517FD Driver object
+//  ACAN2518FD Driver object
 //——————————————————————————————————————————————————————————————————————————————
 
-ACAN2517FD can (MCP2517_CS, SPI1, MCP2517_INT) ;
+ACAN2518FD can (MCP2518_CS, SPI1, MCP2518_INT) ;
 
 //——————————————————————————————————————————————————————————————————————————————
 //   SETUP
@@ -41,11 +41,11 @@ void setup () {
   while (!Serial) { digitalWrite (LED_BUILTIN, !digitalRead (LED_BUILTIN)) ; }
 //----------------------------------- Begin SPI1
   SPI1.begin () ;
-//--- Configure ACAN2517FD
+//--- Configure ACAN2518FD
 //--- For version >= 2.1.0
-  ACAN2517FDSettings settings (ACAN2517FDSettings::OSC_4MHz10xPLL, 1000 * 1000, DataBitRateFactor::x8) ;
+  ACAN2518FDSettings settings (ACAN2518FDSettings::OSC_4MHz10xPLL, 1000 * 1000, DataBitRateFactor::x8) ;
 //--- For version < 2.1.0
-//  ACAN2517FDSettings settings (ACAN2517FDSettings::OSC_4MHz10xPLL, 1000 * 1000, ACAN2517FDSettings::DATA_BITRATE_x8) ;
+//  ACAN2518FDSettings settings (ACAN2518FDSettings::OSC_4MHz10xPLL, 1000 * 1000, ACAN2518FDSettings::DATA_BITRATE_x8) ;
   settings.mDriverReceiveFIFOSize = 200 ;
 //--- Begin
   const uint32_t errorCode = can.begin (settings, [] { can.isr () ; }) ;
